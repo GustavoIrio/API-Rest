@@ -17,13 +17,13 @@ export const companiesController = {
     save: async (req: Request, res: Response) => {
         const {  name, bio, website, email } = req.body
         try {
-            const companies = await Company.create({
+            const company = await Company.create({
                 name,
                 bio,
                 website,
                 email
             })
-            return res.status(201).json(companies)
+            return res.status(201).json(company)
         } catch (err) {
             if (err instanceof Error) {
                 return res.status(400).json({ message: err.message })
@@ -49,7 +49,7 @@ export const companiesController = {
         const { id } = req.params
         const {  name, bio, website, email } = req.body
         try {
-            const [affectedRows, companies] = await Company.update({
+            const [affectedRows, company] = await Company.update({
                 name,
                 bio,
                 website,
@@ -59,7 +59,7 @@ export const companiesController = {
                 returning: true // retorna as linhas afetadas
             })
 
-            return res.json(companies[0])
+            return res.json(company[0])
         } catch (err) {
             if (err instanceof Error) {
                 return res.status(400).json({ message: err.message })
@@ -71,7 +71,7 @@ export const companiesController = {
     delete: async (req: Request, res: Response) => {
         const { id } = req.params
         try {
-            const companies = await Company.destroy({ where: { id }})
+            const company = await Company.destroy({ where: { id }})
             return res.status(204).send()
         } catch (err) {
             if (err instanceof Error) {
